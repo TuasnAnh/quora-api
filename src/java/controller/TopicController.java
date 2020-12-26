@@ -10,8 +10,6 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import middleware.Authenticate;
-import middleware.Authorization;
 import middleware.VerifyRequest;
 import serviceImplement.AccountServiceImplement;
 
@@ -30,5 +28,9 @@ public class TopicController {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
         }
+    }
+    
+    public static void getFollowedTopic(HttpServletRequest request, HttpServletResponse response, JsonObject data) {
+        
     }
 }
