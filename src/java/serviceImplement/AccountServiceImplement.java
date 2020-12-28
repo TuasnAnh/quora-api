@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import model.Account;
 import model.User;
 import service.AccountService;
 
@@ -97,7 +98,7 @@ public class AccountServiceImplement implements AccountService {
     }
 
     @Override
-    public User login(String email, String password) {
+    public Account login(String email, String password) {
 
         try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("select * from user where email = ?");) {
             state.setString(1, email);
@@ -106,21 +107,21 @@ public class AccountServiceImplement implements AccountService {
             if (rs.next()) {
                 if (rs.getString("password").equals(password)) {
                     if (rs.getString("status").equals("VERIFIED")) {
-                        return new User(rs.getInt("uid"), email, rs.getString("roll"), "login success");
+                        return new Account(rs.getInt("uid"), email, rs.getString("role"), "login success");
                     } else if (rs.getString("status").equals("NOT_VERIFY")) {
                         System.out.println("Email not verified");
-                        return new User("account not verified");
+                        return new Account("account not verified");
                     } else if (rs.getString("status").equals("BANNED")) {
                         System.out.println("banned account");
-                        return new User("banned account");
+                        return new Account("banned account");
                     }
                 } else {
                     System.out.println("Incorrect password");
-                    return new User("incorrect password");
+                    return new Account("incorrect password");
                 }
             } else {
                 System.out.println("Invalid email");
-                return new User("email not found");
+                return new Account("email not found");
             }
 
         } catch (SQLException ex) {
@@ -136,11 +137,12 @@ public class AccountServiceImplement implements AccountService {
             state.setString(1, "VERIFIED");
             state.setString(2, email);
             state.executeUpdate();
-            
+
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return false;
     }
+
 }

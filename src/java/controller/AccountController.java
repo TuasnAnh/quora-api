@@ -10,13 +10,11 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.User;
+import model.Account;
 import service.AccountService;
 import serviceImplement.AccountServiceImplement;
 
@@ -86,13 +84,12 @@ public class AccountController {
     public static void login(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException {
         String email = data.get("email").getAsString();
         String password = data.get("password").getAsString();
-        User user = accountService.login(email, password);
+        Account account = accountService.login(email, password);
 
         Map<String, String> message = new LinkedHashMap<>();
-        message.put("status", user.getLoginStatus());
-        if ("login success".equalsIgnoreCase(user.getLoginStatus())) {
-            String userRoll = accountService.getUserRoll(user.getEmail());
-            message.put("roll", userRoll);
+        message.put("status", account.getLoginStatus());
+        if ("login success".equalsIgnoreCase(account.getLoginStatus())) {
+            message.put("role", account.getRole());
             // store email in session
             HttpSession session = request.getSession();
             // expire in 30 days

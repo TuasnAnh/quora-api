@@ -5,6 +5,8 @@
  */
 package service;
 
+import model.Account;
+import model.Admin;
 import model.User;
 
 /**
@@ -16,10 +18,11 @@ public interface AccountService {
     public boolean checkExistedEmail(String email);
 
     public int insertUser(String firstName, String lastName, String email, String password);
-    
+
     public String getUserRoll(String email);
-    
-    public User login(String email, String password);
-    
+
+    public Account login(String email, String password);
+
     public boolean verifyEmail(String email);
+
 }

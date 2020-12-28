@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.user;
+package servlet.account;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -22,11 +22,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

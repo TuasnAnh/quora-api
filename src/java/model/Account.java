@@ -10,19 +10,20 @@ package model;
  * @author ADMIN
  */
 public class Account {
+
     private int aid;
     private int uid;
     private String email;
-    private String password;
+    private String role;
     private String loginStatus;
 
-    public Account(int uid, String email, String password, String loginStatus) {
+    public Account(int uid, String email, String role, String loginStatus) {
         this.uid = uid;
         this.email = email;
-        this.password = password;
+        this.role = role;
         this.loginStatus = loginStatus;
     }
-    
+
     public Account(String loginStatus) {
         this.loginStatus = loginStatus;
     }
@@ -39,12 +40,12 @@ public class Account {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getLoginStatus() {
         return loginStatus;
     }
-    
+
+    public String getRole() {
+        return role;
+    }
+
 }
