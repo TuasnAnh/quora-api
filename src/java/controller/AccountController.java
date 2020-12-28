@@ -14,7 +14,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Account;
+import model.User;
 import service.AccountService;
 import serviceImplement.AccountServiceImplement;
 
@@ -84,12 +84,12 @@ public class AccountController {
     public static void login(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException {
         String email = data.get("email").getAsString();
         String password = data.get("password").getAsString();
-        Account account = accountService.login(email, password);
+        User user = accountService.login(email, password);
 
         Map<String, String> message = new LinkedHashMap<>();
-        message.put("status", account.getLoginStatus());
-        if ("login success".equalsIgnoreCase(account.getLoginStatus())) {
-            message.put("role", account.getRole());
+        message.put("status", user.getLoginStatus());
+        if ("login success".equalsIgnoreCase(user.getLoginStatus())) {
+            message.put("role", user.getRole());
             // store email in session
             HttpSession session = request.getSession();
             // expire in 30 days

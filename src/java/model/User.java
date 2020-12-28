@@ -20,13 +20,13 @@ public class User {
     private String degreeType;
     private String graduationYear;
     private String location;
-    private String roll;
+    private String role;
 
     private String email;
     private String password;
     private String loginStatus;
 
-    public User(int uid, String firstName, String lastName, String description, String credential, String school, String degreeType, String graduationYear, String location, String roll) {
+    public User(int uid, String firstName, String lastName, String description, String credential, String school, String degreeType, String graduationYear, String location, String role) {
         this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,23 +36,23 @@ public class User {
         this.degreeType = degreeType;
         this.graduationYear = graduationYear;
         this.location = location;
-        this.roll = roll;
+        this.role = role;
     }
     
     public User(String loginStatus) {
         this.loginStatus = loginStatus;
     }
     
-    public User(int uid, String email, String roll, String loginStatus) {
+    public User(int uid, String email, String role, String loginStatus) {
         this.uid = uid;
         this.email = email;
-        this.roll = roll;
+        this.role = role;
         this.loginStatus = loginStatus;
     }
     
-    public User(int uid, String roll) {
+    public User(int uid, String role) {
         this.uid = uid;
-        this.roll = roll;
+        this.role = role;
     }
 
     public int getUid() {
@@ -91,8 +91,8 @@ public class User {
         return location;
     }
 
-    public String getRoll() {
-        return roll;
+    public String getRole() {
+        return role;
     }
 
     public String getEmail() {
