@@ -161,4 +161,31 @@ public class AccountServiceImplement implements AccountService {
         return users;
     }
 
+    @Override
+    public boolean banUser(int uid) {
+        try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("update user set status = ? where uid = ?");) {
+            state.setString(1, "BANNED");
+            state.setInt(2, uid);
+            state.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteUser(int uid) {
+        try (Connection connection = JDBCConnection.getConnection();
+                PreparedStatement state1 = connection.prepareStatement("delete from user where uid = ?");) {
+            state1.setInt(1, uid);
+            state1.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
 }

@@ -7,6 +7,7 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import static controller.ReportController.reportService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -135,5 +136,17 @@ public class AccountController {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
+    }
+
+    public static void banUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int uid = Integer.parseInt(request.getParameter("uid"));
+        accountService.banUser(uid);
+        response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user/user.jsp");
+    }
+
+    public static void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int uid = Integer.parseInt(request.getParameter("uid"));
+        accountService.deleteUser(uid);
+        response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user/user.jsp");
     }
 }

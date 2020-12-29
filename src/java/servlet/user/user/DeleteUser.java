@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilidazn
  */
-@WebServlet(name = "getUsers", urlPatterns = {"/getUsers"})
-public class getUsers extends HttpServlet {
+@WebServlet(name = "deleteUser", urlPatterns = {"/deleteUser"})
+public class DeleteUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountController.getUsers(request, response);
+        AccountController.deleteUser(request, response);
     }
 
 }

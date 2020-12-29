@@ -25,4 +25,8 @@ public interface AccountService {
     public boolean verifyEmail(String email);
 
     public ArrayList<User> getUsers();
+    
+    public boolean banUser(int uid);
+    
+    public boolean deleteUser(int uid);
 }
