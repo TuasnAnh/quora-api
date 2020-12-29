@@ -55,6 +55,12 @@ public class User {
         this.role = role;
     }
 
+    public User(int uid, String email, String loginStatus) {
+        this.uid = uid;
+        this.email = email;
+        this.loginStatus = loginStatus;
+    }
+
     public int getUid() {
         return uid;
     }

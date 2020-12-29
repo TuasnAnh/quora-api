@@ -8,6 +8,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.mail.MessagingException;
@@ -122,6 +123,15 @@ public class AccountController {
         }
 
         String json = new Gson().toJson(message);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
+    }
+
+    public static void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ArrayList<User> users = accountService.getUsers();
+        String json = new Gson().toJson(users);
+        System.out.println(json);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);

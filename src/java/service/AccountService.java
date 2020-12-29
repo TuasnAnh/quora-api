@@ -5,6 +5,7 @@
  */
 package service;
 
+import java.util.ArrayList;
 import model.User;
 
 /**
@@ -23,4 +24,5 @@ public interface AccountService {
 
     public boolean verifyEmail(String email);
 
+    public ArrayList<User> getUsers();
 }

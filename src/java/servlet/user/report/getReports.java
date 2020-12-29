@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.user;
+package servlet.user.report;
 
-import controller.AccountController;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,20 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ADMIN
+ * @author zilidazn
  */
-@WebServlet(name = "Logout", urlPatterns = {"/logout"})
-public class Logout extends HttpServlet {
+@WebServlet(name = "getReports", urlPatterns = {"/getReports"})
+public class getReports extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        AccountController.logout(request, response);
+//        ReportController.getReports(request, response);
     }
 
 }

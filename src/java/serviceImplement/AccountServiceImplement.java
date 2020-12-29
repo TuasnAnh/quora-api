@@ -11,8 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
-import model.Account;
 import model.User;
 import service.AccountService;
 
@@ -143,6 +143,22 @@ public class AccountServiceImplement implements AccountService {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<User> getUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        try (Connection connection = JDBCConnection.getConnection();
+                PreparedStatement state1 = connection.prepareStatement("select uid, email, status from user where role = \"USER\"");) {
+            ResultSet rs = state1.executeQuery();
+            while (rs.next()) {
+                users.add(new User(rs.getInt("uid"), rs.getString("email"), rs.getString("status")));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return users;
     }
 
 }
