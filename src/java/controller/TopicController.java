@@ -10,10 +10,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import middleware.Authenticate;
-import middleware.Authorization;
 import middleware.VerifyRequest;
-import serviceImplement.AccountServiceImplement;
 
 /**
  *
@@ -21,10 +18,8 @@ import serviceImplement.AccountServiceImplement;
  */
 public class TopicController {
 
-    static AccountServiceImplement accountService = new AccountServiceImplement();
-
     public static void getSuggestTopic(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException {
-        if (VerifyRequest.verifyUserRequest(request, response, accountService)) {
+        if (VerifyRequest.verifyUserRequest(request, response)) {
             String json = new Gson().toJson("get suggest topic");
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

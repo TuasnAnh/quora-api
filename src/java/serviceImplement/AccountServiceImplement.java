@@ -46,7 +46,7 @@ public class AccountServiceImplement implements AccountService {
     public int insertUser(String firstName, String lastName, String email, String password) {
 
         try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement state1 = connection.prepareStatement("insert into user (email, password, first_name, last_name, roll, register_date) values (?, ?, ?, ?, ?, ?);");
+                PreparedStatement state1 = connection.prepareStatement("insert into user (email, password, first_name, last_name, role, register_date) values (?, ?, ?, ?, ?, ?);");
                 PreparedStatement state2 = connection.prepareStatement("SELECT LAST_INSERT_ID();");) {
 
             Date date = new java.util.Date();
@@ -81,14 +81,14 @@ public class AccountServiceImplement implements AccountService {
     }
 
     @Override
-    public String getUserRoll(String email) {
-        try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("select roll from user where email = ?");) {
+    public String getUserRole(String email) {
+        try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("select role from user where email = ?");) {
             state.setString(1, email);
 
             ResultSet rs = state.executeQuery();
 
             if (rs.next()) {
-                return rs.getString("roll");
+                return rs.getString("role");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
