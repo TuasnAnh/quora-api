@@ -25,9 +25,8 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Duc");
-        //JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-        //AccountController.login(request, response, data);
+        JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+        AccountController.login(request, response, data);
     }
 
 }
