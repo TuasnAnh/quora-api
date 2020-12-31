@@ -84,6 +84,7 @@ public class AccountController {
     }
 
     public static void login(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException {
+        System.out.println("OKLA");
         String email = data.get("email").getAsString();
         String password = data.get("password").getAsString();
         User user = accountService.login(email, password);

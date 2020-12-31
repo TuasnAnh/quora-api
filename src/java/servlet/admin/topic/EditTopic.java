@@ -3,29 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.user;
+package servlet.admin.topic;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import controller.AccountController;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import controller.TopicController;
 
 /**
  *
- * @author ADMIN
+ * @author Dung
  */
-@WebServlet(name = "register", urlPatterns = {"/register"})
-public class Register extends HttpServlet {
+@WebServlet(name = "EditTopic", urlPatterns = {"/admin/edit-topic"})
+public class EditTopic extends HttpServlet {
 
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,11 +33,7 @@ public class Register extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-        try {
-            AccountController.register(request, response, data);
-        } catch (MessagingException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        TopicController.editTopic(request, response, data);
     }
 
 }

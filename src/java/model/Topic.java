@@ -5,6 +5,9 @@
  */
 package model;
 
+import com.google.gson.JsonObject;
+import javax.json.JsonException;
+
 /**
  *
  * @author ADMIN
@@ -36,6 +39,13 @@ public class Topic {
         this.topicName = topicName;
         this.topicImageUrl = topicImageUrl;
     }
+
+    public Topic(int tid, String topicName, String topicImageUrl) {
+        this.tid = tid;
+        this.topicName = topicName;
+        this.topicImageUrl = topicImageUrl;
+    }
+
 
     public int getTid() {
         return tid;
@@ -76,6 +86,17 @@ public class Topic {
     public void setIsFollowed(boolean isFollowed) {
         this.isFollowed = isFollowed;
     }
-
+    
+    public JsonObject getJSONObject() {
+        JsonObject obj = new JsonObject();
+        try {
+            obj.addProperty("tid", tid);
+            obj.addProperty("topicName", topicName);
+            obj.addProperty("topicImageUrl", topicImageUrl);
+        } catch (JsonException e) {
+            System.out.println(e);
+        }
+        return obj;
+    }
     
 }
