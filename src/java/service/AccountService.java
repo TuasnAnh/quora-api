@@ -5,7 +5,6 @@
  */
 package service;
 
-import java.util.ArrayList;
 import model.User;
 
 /**
@@ -17,18 +16,10 @@ public interface AccountService {
     public boolean checkExistedEmail(String email);
 
     public int insertUser(String firstName, String lastName, String email, String password);
-
-    public String getUserRole(String email);
-
+    
+    public String getUserRoll(String email);
+    
     public User login(String email, String password);
-
+    
     public boolean verifyEmail(String email);
-
-    public ArrayList<User> getUsers();
-    
-    public boolean banUser(int uid);
-    
-    public boolean deleteUser(int uid);
-    
-    public User getUser(int uid);
 }

@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import service.AccountService;
 import serviceImplement.AccountServiceImplement;
 
 /**
@@ -19,20 +18,20 @@ import serviceImplement.AccountServiceImplement;
  */
 public class Authenticate {
 
-    public static String authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        AccountService accountService = new AccountServiceImplement();
+    public static String authenticate(HttpServletRequest request, HttpServletResponse response, AccountServiceImplement accountService) throws IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("email") == null) {
+
+        if (session.getAttribute("email") != null) {
+            String email = session.getAttribute("email").toString();
+            String roll = accountService.getUserRoll(email);
+            return roll;
+        } else {
             String json = new Gson().toJson("Please login or register!");
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
-        } else {
-            String email = session.getAttribute("email").toString();
-            String role = accountService.getUserRole(email);
-            return role;
         }
+
         return null;
     }
-
 }

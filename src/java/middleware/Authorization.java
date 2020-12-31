@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Authorization {
 
-    public static boolean userAuthor(HttpServletResponse response, String role) throws IOException {
-        if ("USER".equals(role)) {
+    public static boolean userAuthor(HttpServletResponse response, String roll) throws IOException {
+        if ("USER".equals(roll)) {
             return true;
         } else {
             String json = new Gson().toJson("Permission Error: you are not user.");
@@ -25,17 +25,5 @@ public class Authorization {
             response.getWriter().write(json);
         }
         return false;
-    }
-
-    public static boolean userManageAuthor(HttpServletResponse response, String role) throws IOException {
-        if ("USER_MANAGE".equals(role)) {
-            return true;
-        } else {
-            String json = new Gson().toJson("Permission Error: you are not user manager.");
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-            return false;
-        }
     }
 }
