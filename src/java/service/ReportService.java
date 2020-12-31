@@ -5,15 +5,16 @@
  */
 package service;
 
-import model.Answer;
+import java.util.ArrayList;
+import model.Report;
 
 /**
  *
- * @author ADMIN
+ * @author zilidazn
  */
-public interface AnswerService {
+public interface ReportService {
 
-    public boolean deleteAnswer(int aid);
+    public ArrayList<Report> getReports();
     
-    public Answer getAnswer(int aid);
+    public boolean deleteReport(int aid);
 }

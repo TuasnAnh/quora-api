@@ -5,10 +5,13 @@
  */
 package service;
 
+import model.Question;
+
 /**
  *
  * @author ADMIN
  */
 public interface QuestionService {
-    
+
+    public Question getQuestion(int qid);
 }

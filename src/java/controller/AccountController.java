@@ -8,14 +8,14 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import middleware.VerifyRequest;
 import model.User;
 import service.AccountService;
 import serviceImplement.AccountServiceImplement;
@@ -44,7 +44,7 @@ public class AccountController {
             System.out.println("new user: " + userId);
             if (userId != -1) {
                 status.put("status", "success");
-                status.put("roll", accountService.getUserRoll(email));
+                status.put("role", accountService.getUserRole(email));
 
                 // store email in http session
                 HttpSession session = request.getSession();
@@ -92,8 +92,7 @@ public class AccountController {
         Map<String, String> message = new LinkedHashMap<>();
         message.put("status", user.getLoginStatus());
         if ("login success".equalsIgnoreCase(user.getLoginStatus())) {
-            String userRoll = accountService.getUserRoll(user.getEmail());
-            message.put("roll", userRoll);
+            message.put("role", user.getRole());
             // store email in session
             HttpSession session = request.getSession();
             // expire in 30 days
@@ -129,5 +128,44 @@ public class AccountController {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
+    }
+
+    public static void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (VerifyRequest.verifyUserManageRequest(request, response)) {
+            ArrayList<User> users = accountService.getUsers();
+            String json = new Gson().toJson(users);
+            System.out.println(json);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
+    }
+
+    public static void banUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (VerifyRequest.verifyUserManageRequest(request, response)) {
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            accountService.banUser(uid);
+            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user.jsp");
+        }
+    }
+
+    public static void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (VerifyRequest.verifyUserManageRequest(request, response)) {
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            accountService.deleteUser(uid);
+            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user.jsp");
+        }
+    }
+
+    public static void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (VerifyRequest.verifyUserManageRequest(request, response)) {
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            User user = accountService.getUser(uid);
+            String json = new Gson().toJson(user);
+            System.out.println(json);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
     }
 }

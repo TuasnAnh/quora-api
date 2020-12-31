@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.user;
+package servlet.user.question;
 
-import controller.AccountController;
+import controller.QuestionController;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,20 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ADMIN
+ * @author zilidazn
  */
-@WebServlet(name = "verify", urlPatterns = {"/verify"})
-public class verify extends HttpServlet {
+@WebServlet(name = "GetQuestion", urlPatterns = {"/user/get-question"})
+public class GetQuestion extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountController.verifyEmail(request, response);
+        QuestionController.getQuestion(request, response);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-
 }

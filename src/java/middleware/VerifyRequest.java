@@ -5,11 +5,9 @@
  */
 package middleware;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import serviceImplement.AccountServiceImplement;
 
 /**
  *
@@ -17,9 +15,17 @@ import serviceImplement.AccountServiceImplement;
  */
 public class VerifyRequest {
 
-    public static boolean verifyUserRequest(HttpServletRequest request, HttpServletResponse response, AccountServiceImplement accountService) throws IOException {
-        String roll = Authenticate.authenticate(request, response, accountService);
-        if (roll != null && Authorization.userAuthor(response, roll)) {
+    public static boolean verifyUserRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String role = Authenticate.authenticate(request, response);
+        if (role != null && Authorization.userAuthor(response, role)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean verifyUserManageRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String role = Authenticate.authenticate(request, response);
+        if (role != null && Authorization.userManageAuthor(response, role)) {
             return true;
         }
         return false;

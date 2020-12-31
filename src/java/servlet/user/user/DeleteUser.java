@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.user;
+package servlet.user.user;
 
 import controller.AccountController;
 import java.io.IOException;
@@ -15,20 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ADMIN
+ * @author zilidazn
  */
-@WebServlet(name = "verify", urlPatterns = {"/verify"})
-public class verify extends HttpServlet {
+@WebServlet(name = "deleteUser", urlPatterns = {"/user/delete-user"})
+public class DeleteUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountController.verifyEmail(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        AccountController.deleteUser(request, response);
     }
 
 }

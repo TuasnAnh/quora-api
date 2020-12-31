@@ -9,14 +9,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import middleware.Authenticate;
-import middleware.Authorization;
 import middleware.VerifyRequest;
 import model.Topic;
 import serviceImplement.*;
@@ -33,7 +30,7 @@ public class TopicController {
     static TopicService topicService = new TopicServiceImplement();
 
     public static void getSuggestTopic(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException {
-        if (VerifyRequest.verifyUserRequest(request, response, accountService)) {
+        if (VerifyRequest.verifyUserRequest(request, response)) {
             String json = new Gson().toJson("get suggest topic");
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

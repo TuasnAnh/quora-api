@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.user;
+package servlet.account;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

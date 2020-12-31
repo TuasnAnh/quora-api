@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.sql.Timestamp;
-
 /**
  *
  * @author ADMIN
@@ -17,11 +15,11 @@ public class Question {
     private int userId;
     private int topicId;
     private String content;
-    private Timestamp time;
+    private String time;
     private int totalAnswer;
     private String topicName;
 
-    public Question(int questionId, int userId, int topicId, String content, Timestamp time, int totalAnswer) {
+    public Question(int questionId, int userId, int topicId, String content, String time, int totalAnswer) {
         this.questionId = questionId;
         this.userId = userId;
         this.topicId = topicId;
@@ -30,7 +28,7 @@ public class Question {
         this.totalAnswer = totalAnswer;
     }
 
-    public Question(int questionId, int userId, int topicId, String content, Timestamp time, int totalAnswer, String topicName) {
+    public Question(int questionId, int userId, int topicId, String content, String time, int totalAnswer, String topicName) {
         this.questionId = questionId;
         this.userId = userId;
         this.topicId = topicId;
@@ -38,6 +36,13 @@ public class Question {
         this.time = time;
         this.totalAnswer = totalAnswer;
         this.topicName = topicName;
+    }
+
+    public Question(int questionId, int userId, String content, String time) {
+        this.questionId = questionId;
+        this.userId = userId;
+        this.content = content;
+        this.time = time;
     }
 
     public int getQuestionId() {
@@ -72,11 +77,11 @@ public class Question {
         this.content = content;
     }
 
-    public Timestamp getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -95,5 +100,5 @@ public class Question {
     public void setTopicName(String topicName) {
         this.topicName = topicName;
     }
-    
+
 }
