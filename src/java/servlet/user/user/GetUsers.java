@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilidazn
  */
-@WebServlet(name = "getUsers", urlPatterns = {"/getUsers"})
+@WebServlet(name = "getUsers", urlPatterns = {"/user/get-users"})
 public class GetUsers extends HttpServlet {
 
     @Override

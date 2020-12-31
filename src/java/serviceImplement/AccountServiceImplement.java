@@ -188,4 +188,19 @@ public class AccountServiceImplement implements AccountService {
         return false;
     }
 
+    @Override
+    public User getUser(int uid) {
+        try (Connection connection = JDBCConnection.getConnection();
+                PreparedStatement state1 = connection.prepareStatement("select first_name, last_name, description, credential, school, degreetype, graduation_year, location, url, register_date from user where role = \"USER\"");) {
+            ResultSet rs = state1.executeQuery();
+            if (rs.next()) {
+                return new User(uid, rs.getString("first_name"), rs.getString("last_name"), rs.getString("description"), rs.getString("credential"), rs.getString("school"), rs.getString("degreetype"), rs.getString("graduation_year"), rs.getString("location"), rs.getString("url"), rs.getString("register_date"));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }

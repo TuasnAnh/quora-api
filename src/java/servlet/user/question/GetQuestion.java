@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.user.answer;
+package servlet.user.question;
 
-import controller.AnswerController;
+import controller.QuestionController;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,13 +17,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilidazn
  */
-@WebServlet(name = "deleteAnswer", urlPatterns = {"/user/delete-answer"})
-public class DeleteAnswer extends HttpServlet {
+@WebServlet(name = "GetQuestion", urlPatterns = {"/user/get-question"})
+public class GetQuestion extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AnswerController.deleteAnswer(request, response);
+        QuestionController.getQuestion(request, response);
     }
-
 }

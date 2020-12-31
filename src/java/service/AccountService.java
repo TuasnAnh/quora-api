@@ -29,4 +29,6 @@ public interface AccountService {
     public boolean banUser(int uid);
     
     public boolean deleteUser(int uid);
+    
+    public User getUser(int uid);
 }

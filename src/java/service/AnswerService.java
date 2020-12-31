@@ -5,6 +5,8 @@
  */
 package service;
 
+import model.Answer;
+
 /**
  *
  * @author ADMIN
@@ -12,4 +14,6 @@ package service;
 public interface AnswerService {
 
     public boolean deleteAnswer(int aid);
+    
+    public Answer getAnswer(int aid);
 }

@@ -144,7 +144,7 @@ public class AccountController {
         if (VerifyRequest.verifyUserManageRequest(request, response)) {
             int uid = Integer.parseInt(request.getParameter("uid"));
             accountService.banUser(uid);
-            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user/user.jsp");
+            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user.jsp");
         }
     }
 
@@ -152,7 +152,19 @@ public class AccountController {
         if (VerifyRequest.verifyUserManageRequest(request, response)) {
             int uid = Integer.parseInt(request.getParameter("uid"));
             accountService.deleteUser(uid);
-            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user/user.jsp");
+            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user.jsp");
+        }
+    }
+
+    public static void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (VerifyRequest.verifyUserManageRequest(request, response)) {
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            User user = accountService.getUser(uid);
+            String json = new Gson().toJson(user);
+            System.out.println(json);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
         }
     }
 }

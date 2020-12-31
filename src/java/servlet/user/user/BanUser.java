@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilidazn
  */
-@WebServlet(name = "banUser", urlPatterns = {"/banUser"})
+@WebServlet(name = "banUser", urlPatterns = {"/user/ban-user"})
 public class BanUser extends HttpServlet {
 
     @Override

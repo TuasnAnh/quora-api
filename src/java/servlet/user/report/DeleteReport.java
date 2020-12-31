@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilidazn
  */
-@WebServlet(name = "deleteReport", urlPatterns = {"/deleteReport"})
+@WebServlet(name = "deleteReport", urlPatterns = {"/user/delete-report"})
 public class DeleteReport extends HttpServlet {
 
     @Override

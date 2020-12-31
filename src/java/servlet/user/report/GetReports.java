@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilidazn
  */
-@WebServlet(name = "getReports", urlPatterns = {"/getReports"})
+@WebServlet(name = "getReports", urlPatterns = {"/user/get-reports"})
 public class GetReports extends HttpServlet {
 
     @Override

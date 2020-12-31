@@ -17,13 +17,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilidazn
  */
-@WebServlet(name = "deleteAnswer", urlPatterns = {"/user/delete-answer"})
-public class DeleteAnswer extends HttpServlet {
+@WebServlet(name = "GetAnswer", urlPatterns = {"/user/get-answer"})
+public class GetAnswer extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AnswerController.deleteAnswer(request, response);
+        AnswerController.getAnswer(request, response);
     }
-
 }

@@ -10,21 +10,22 @@ package model;
  * @author ADMIN
  */
 public class Answer {
+
     private int answerId;
-    private int authorId;
-    private String time;
-    private String authorCredential;
-    private String question;
-    private String questionId;
+    private int userId;
+    private int questionId;
     private String content;
+    private String time;
     private int upvote;
     private int downvote;
+    private String authorCredential;
+    private String question;
     private boolean isUpvote;
     private boolean isDownvote;
 
-    public Answer(int answerId, int authorId, String time, String authorCredential, String question, String questionId, String content, int upvote, int downvote, boolean isUpvote, boolean isDownvote) {
+    public Answer(int answerId, int userId, String time, String authorCredential, String question, int questionId, String content, int upvote, int downvote, boolean isUpvote, boolean isDownvote) {
         this.answerId = answerId;
-        this.authorId = authorId;
+        this.userId = userId;
         this.time = time;
         this.authorCredential = authorCredential;
         this.question = question;
@@ -36,6 +37,16 @@ public class Answer {
         this.isDownvote = isDownvote;
     }
 
+    public Answer(int answerId, int userId, int questionId, String content, String time, int upvote, int downvote) {
+        this.answerId = answerId;
+        this.userId = userId;
+        this.questionId = questionId;
+        this.content = content;
+        this.time = time;
+        this.upvote = upvote;
+        this.downvote = downvote;
+    }
+
     public int getAnswerId() {
         return answerId;
     }
@@ -44,12 +55,12 @@ public class Answer {
         this.answerId = answerId;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getTime() {
@@ -76,11 +87,11 @@ public class Answer {
         this.question = question;
     }
 
-    public String getQuestionId() {
+    public int getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(int questionId) {
         this.questionId = questionId;
     }
 
@@ -123,5 +134,5 @@ public class Answer {
     public void setIsDownvote(boolean isDownvote) {
         this.isDownvote = isDownvote;
     }
-    
+
 }
