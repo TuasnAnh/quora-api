@@ -38,4 +38,17 @@ public class Authorization {
             return false;
         }
     }
+    
+    public static boolean topicManageAuthor(HttpServletResponse response, String role) throws IOException {
+        if ("TOPIC_MANAGE".equals(role)) {
+            return true;
+        } else {
+            String json = new Gson().toJson("Permission Error: you are not topic manager.");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            return false;
+        }
+    }
+    
 }
