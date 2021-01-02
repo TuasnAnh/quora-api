@@ -44,7 +44,7 @@ public class AccountController {
             System.out.println("new user: " + userId);
             if (userId != -1) {
                 status.put("status", "success");
-                status.put("role", accountService.getUserRole(email));
+                status.put("role", accountService.getUserRoll(email));
 
                 // store email in http session
                 HttpSession session = request.getSession();
@@ -92,7 +92,7 @@ public class AccountController {
         Map<String, String> message = new LinkedHashMap<>();
         message.put("status", user.getLoginStatus());
         if ("login success".equalsIgnoreCase(user.getLoginStatus())) {
-            message.put("role", user.getRole());
+            message.put("role", user.getRoll());
             // store email in session
             HttpSession session = request.getSession();
             // expire in 30 days
@@ -167,5 +167,46 @@ public class AccountController {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
         }
+    }
+
+    public static void sendEmailForgotPassword(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException {
+        String email = data.get("email").getAsString();
+        boolean isExistedEmail = accountService.checkExistedEmail(email);
+        if (isExistedEmail) {
+            int code = (int) (Math.random() * (99999999 - 10000000) + 10000000);
+            boolean check = accountService.addForgotCode(email, code);
+            if (check) {
+                new Thread(() -> {
+                    try {
+                        utils.EmailUtils.sendForgotEmail(email, code);
+                    } catch (MessagingException ex) {
+                        ex.printStackTrace();
+                    }
+                }).start();
+            }
+
+            String json = new Gson().toJson(check);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        } else {
+            String json = new Gson().toJson("wrong email");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
+
+    }
+
+    public static void forgotPassword(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException {
+        String newPassword = data.get("newPassword").getAsString();
+        String code = data.get("code").getAsString();
+
+        Map<String, String> res = accountService.fogotPassword(newPassword, code);
+
+        String json = new Gson().toJson(res);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
     }
 }

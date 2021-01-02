@@ -13,7 +13,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import model.User;
+import org.mindrot.jbcrypt.BCrypt;
 import service.AccountService;
 
 /**
@@ -81,7 +84,7 @@ public class AccountServiceImplement implements AccountService {
     }
 
     @Override
-    public String getUserRole(String email) {
+    public String getUserRoll(String email) {
         try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("select role from user where email = ?");) {
             state.setString(1, email);
 
@@ -105,7 +108,7 @@ public class AccountServiceImplement implements AccountService {
 
             ResultSet rs = state.executeQuery();
             if (rs.next()) {
-                if (rs.getString("password").equals(password)) {
+                if (BCrypt.checkpw(password, rs.getString("password"))) {
                     if (rs.getString("status").equals("VERIFIED")) {
                         return new User(rs.getInt("uid"), email, rs.getString("role"), "login success");
                     } else if (rs.getString("status").equals("NOT_VERIFY")) {
@@ -203,4 +206,65 @@ public class AccountServiceImplement implements AccountService {
         return null;
     }
 
+    @Override
+    public boolean addForgotCode(String email, int code) {
+        try (Connection connection = JDBCConnection.getConnection();
+                PreparedStatement state1 = connection.prepareStatement("select * from verifyCode where email = ?");) {
+
+            state1.setString(1, email);
+
+            ResultSet rs = state1.executeQuery();
+            if (rs.next()) {
+                PreparedStatement state2 = connection.prepareStatement("update verifyCode set vCode = ? where email = ?");
+                state2.setString(1, code + "");
+                state2.setString(2, email);
+                state2.executeUpdate();
+            } else {
+                PreparedStatement state2 = connection.prepareStatement("insert into verifyCode (vCode, email) values (?, ?);");
+                state2.setString(1, code + "");
+                state2.setString(2, email);
+                state2.executeUpdate();
+            }
+
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public Map<String, String> fogotPassword(String newPass, String code) {
+        try (Connection connection = JDBCConnection.getConnection();
+                PreparedStatement state1 = connection.prepareStatement("select * from verifyCode where vCode = ?");) {
+
+            Map<String, String> res = new LinkedHashMap<>();
+
+            state1.setString(1, code);
+            ResultSet rs = state1.executeQuery();
+            if (rs.next()) {
+                String email = rs.getString("email");
+                String hash = BCrypt.hashpw(newPass, BCrypt.gensalt(10));
+                PreparedStatement state2 = connection.prepareStatement("update user set password = ? where email = ?");
+                state2.setString(1, hash);
+                state2.setString(2, email);
+                state2.executeUpdate();
+
+                PreparedStatement state3 = connection.prepareStatement("delete from verifyCode where vCode = ?");
+                state3.setString(1, code);
+                state3.executeUpdate();
+
+                res.put("msg", "changed password");
+            } else {
+                res.put("msg", "wrong code");
+            }
+
+            return res;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 }

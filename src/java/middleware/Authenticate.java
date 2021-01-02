@@ -29,7 +29,7 @@ public class Authenticate {
             response.getWriter().write(json);
         } else {
             String email = session.getAttribute("email").toString();
-            String role = accountService.getUserRole(email);
+            String role = accountService.getUserRoll(email);
             return role;
         }
         return null;

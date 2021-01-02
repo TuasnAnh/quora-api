@@ -123,7 +123,7 @@ public class User {
         return location;
     }
 
-    public String getRole() {
+    public String getRoll() {
         return role;
     }
 

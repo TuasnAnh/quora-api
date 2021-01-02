@@ -31,9 +31,10 @@ public class AnswerServiceImplement implements AnswerService {
             PreparedStatement state2 = connection.prepareStatement("delete from answer where aid = ?");
             state2.setInt(1, aid);
             state2.executeUpdate();
-            PreparedStatement state3 = connection.prepareStatement("insert into notification (uid, content) values (?, ?)");
+            PreparedStatement state3 = connection.prepareStatement("insert into notification (uid, notitype, content) values (?, ?, ?)");
             state3.setInt(1, uid);
-            state3.setString(2, "Your answer has been deleted");
+            state3.setString(2, "ANNOUNCEMENT");
+            state3.setString(3, "Your answer has been deleted");
             state3.executeUpdate();
             ReportService reportService = new ReportServiceImplement();
             reportService.deleteReport(aid);
