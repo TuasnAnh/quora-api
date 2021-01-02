@@ -47,7 +47,7 @@ public class NotificationServiceImplement implements NotificationService {
             } else if ("NEW_DOWNVOTE".equals(type)) {
                 content = "You have new downvote!";
             }
-            
+
             PreparedStatement state4 = connection.prepareStatement("select qid from answer where aid = ?");
             state4.setInt(1, answerId);
             ResultSet rs4 = state4.executeQuery();
@@ -107,12 +107,22 @@ public class NotificationServiceImplement implements NotificationService {
 
     @Override
     public boolean markAsSeen(int userId, String type) {
-        try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement state1 = connection.prepareStatement("update notification set notistatus = ? where uid = ? and notitype = ?");) {
+        try (Connection connection = JDBCConnection.getConnection();) {
 
-            state1.setString(1, "SEEN");
-            state1.setInt(2, userId);
-            state1.setString(3, type);
+            PreparedStatement state1 = connection.prepareStatement("update notification set notistatus = ? where uid = ? and notitype = ?");
+
+            if ("NEW_VOTE".equals(type)) {
+                state1 = connection.prepareStatement("update notification set notistatus = ? where uid = ? and notitype = ? or notitype = ?");
+                state1.setString(1, "SEEN");
+                state1.setInt(2, userId);
+                state1.setString(3, "NEW_UPVOTE");
+                state1.setString(4, "NEW_DOWNVOTE");
+            } else {
+                state1.setString(1, "SEEN");
+                state1.setInt(2, userId);
+                state1.setString(3, type);
+            }
+
             state1.executeUpdate();
 
             return true;
@@ -146,11 +156,18 @@ public class NotificationServiceImplement implements NotificationService {
 
     @Override
     public List<Notification> getNotification(int userId, String type) {
-        try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement state1 = connection.prepareStatement("select * from notification where uid = ? and notitype = ?");) {
+        try (Connection connection = JDBCConnection.getConnection();) {
+            PreparedStatement state1 = connection.prepareStatement("select * from notification where uid = ? and notitype = ? order by nid desc");
+            if ("NEW_VOTE".equals(type)) {
+                state1 = connection.prepareStatement("select * from notification where uid = ? and notitype = ? or notitype = ? order by nid desc");
+                state1.setInt(1, userId);
+                state1.setString(2, "NEW_UPVOTE");
+                state1.setString(3, "NEW_DOWNVOTE");
+            } else {
+                state1.setInt(1, userId);
+                state1.setString(2, type);
+            }
 
-            state1.setInt(1, userId);
-            state1.setString(2, type);
             ResultSet rs = state1.executeQuery();
 
             List<Notification> notifications = new ArrayList<>();
