@@ -27,13 +27,12 @@ public class SuggestTopic extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        TopicController.getSuggestTopic(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-        TopicController.getSuggestTopic(request, response, data);
     }
 
 }

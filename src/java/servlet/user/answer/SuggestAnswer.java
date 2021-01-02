@@ -5,6 +5,9 @@
  */
 package servlet.user.answer;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import controller.AnswerController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,16 +23,16 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "SuggestAnswer", urlPatterns = {"/user/suggest-answer"})
 public class SuggestAnswer extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+        AnswerController.getSuggestAnswer(request, response, data);
     }
 
 }

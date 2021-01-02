@@ -5,6 +5,7 @@
  */
 package servlet.user.topic;
 
+import controller.TopicController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ public class FollowedTopic extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        TopicController.getFollowedTopic(request, response);
     }
 
     @Override

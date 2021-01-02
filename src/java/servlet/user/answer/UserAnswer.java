@@ -5,6 +5,10 @@
  */
 package servlet.user.answer;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import controller.AnswerController;
+import controller.QuestionController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -25,10 +29,11 @@ public class UserAnswer extends HttpServlet {
             throws ServletException, IOException {
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+        AnswerController.getUserAnswer(request, response, data);
     }
 
 }

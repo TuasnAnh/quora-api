@@ -15,14 +15,19 @@ public class Answer {
     private String time;
     private String authorCredential;
     private String question;
-    private String questionId;
+    private int questionId;
     private String content;
     private int upvote;
     private int downvote;
     private boolean isUpvote;
     private boolean isDownvote;
+    private boolean isBookmarked;
+    private int topicId;
+    private String topicName;
+    private String url;
+    private String authorName;
 
-    public Answer(int answerId, int authorId, String time, String authorCredential, String question, String questionId, String content, int upvote, int downvote, boolean isUpvote, boolean isDownvote) {
+    public Answer(int answerId, int authorId, String time, String authorCredential, String question, int questionId, String content, int upvote, int downvote, boolean isUpvote, boolean isDownvote) {
         this.answerId = answerId;
         this.authorId = authorId;
         this.time = time;
@@ -36,6 +41,21 @@ public class Answer {
         this.isDownvote = isDownvote;
     }
 
+    public Answer(int answerId, int authorId, String time, String authorCredential, int questionId, String content, int upvote, int downvote, int topicId, String topicName, String url, String authorName) {
+        this.answerId = answerId;
+        this.authorId = authorId;
+        this.time = time;
+        this.authorCredential = authorCredential;
+        this.questionId = questionId;
+        this.content = content;
+        this.upvote = upvote;
+        this.downvote = downvote;
+        this.topicId = topicId;
+        this.topicName = topicName;
+        this.url = url;
+        this.authorName = authorName;
+    }
+    
     public int getAnswerId() {
         return answerId;
     }
@@ -76,11 +96,11 @@ public class Answer {
         this.question = question;
     }
 
-    public String getQuestionId() {
+    public int getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(int questionId) {
         this.questionId = questionId;
     }
 
@@ -122,6 +142,46 @@ public class Answer {
 
     public void setIsDownvote(boolean isDownvote) {
         this.isDownvote = isDownvote;
+    }
+
+    public boolean isIsBookmarked() {
+        return isBookmarked;
+    }
+
+    public void setIsBookmarked(boolean isBookmarked) {
+        this.isBookmarked = isBookmarked;
+    }
+
+    public int getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(int topicId) {
+        this.topicId = topicId;
+    }
+
+    public String getTopicName() {
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
     
 }

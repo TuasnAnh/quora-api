@@ -40,6 +40,15 @@ public class Question {
         this.topicName = topicName;
     }
 
+    public Question(int questionId, int topicId, String content, Timestamp time, int totalAnswer, String topicName) {
+        this.questionId = questionId;
+        this.topicId = topicId;
+        this.content = content;
+        this.time = time;
+        this.totalAnswer = totalAnswer;
+        this.topicName = topicName;
+    }
+
     public int getQuestionId() {
         return questionId;
     }
@@ -95,5 +104,5 @@ public class Question {
     public void setTopicName(String topicName) {
         this.topicName = topicName;
     }
-    
+
 }

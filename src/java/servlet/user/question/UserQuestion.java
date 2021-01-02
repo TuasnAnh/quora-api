@@ -5,6 +5,9 @@
  */
 package servlet.user.question;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import controller.QuestionController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UserQuestion", urlPatterns = {"/user/user-question"})
 public class UserQuestion extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,6 +31,8 @@ public class UserQuestion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+        QuestionController.getUserQuestion(request, response, data);
     }
 
 }

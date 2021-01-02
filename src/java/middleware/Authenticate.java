@@ -7,6 +7,8 @@ package middleware;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,7 +28,9 @@ public class Authenticate {
             String roll = accountService.getUserRoll(email);
             return roll;
         } else {
-            String json = new Gson().toJson("Please login or register!");
+            Map<String, String> msg = new LinkedHashMap<>();
+            msg.put("authError", "Please login or register!");
+            String json = new Gson().toJson(msg);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);

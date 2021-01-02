@@ -5,10 +5,22 @@
  */
 package service;
 
+import java.util.List;
+import java.util.Map;
+import model.Topic;
+
 /**
  *
  * @author ADMIN
  */
 public interface TopicService {
-    
+
+    public List<Topic> getFollowedTopic(int userId);
+
+    public Map<String, String> followTopic(int userId, int topicId);
+
+    public List<Topic> getSuggestTopic(int userId);
+
+    public Topic getTopicInfor(int userId, int topicId);
+
 }

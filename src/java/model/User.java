@@ -21,10 +21,28 @@ public class User {
     private String graduationYear;
     private String location;
     private String roll;
+    private String url;
+    private int totalAnswer;
+    private int totalQuestion;
+    private int totalBookmark;
 
     private String email;
     private String password;
     private String loginStatus;
+
+    public User(int uid, String email, String firstName, String lastName, String description, String credential, String school, String degreeType, String graduationYear, String location, String url) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.description = description;
+        this.credential = credential;
+        this.school = school;
+        this.degreeType = degreeType;
+        this.graduationYear = graduationYear;
+        this.location = location;
+        this.url = url;
+        this.uid = uid;
+    }
 
     public User(int uid, String firstName, String lastName, String description, String credential, String school, String degreeType, String graduationYear, String location, String roll) {
         this.uid = uid;
@@ -119,5 +137,38 @@ public class User {
         this.loginStatus = loginStatus;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getTotalAnswer() {
+        return totalAnswer;
+    }
+
+    public void setTotalAnswer(int totalAnswer) {
+        this.totalAnswer = totalAnswer;
+    }
+
+    public int getTotalQuestion() {
+        return totalQuestion;
+    }
+
+    public void setTotalQuestion(int totalQuestion) {
+        this.totalQuestion = totalQuestion;
+    }
+
+    public int getTotalBookmark() {
+        return totalBookmark;
+    }
+
+    public void setTotalBookmark(int totalBookmark) {
+        this.totalBookmark = totalBookmark;
+    }
+
+    
     
 }
