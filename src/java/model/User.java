@@ -5,6 +5,9 @@
  */
 package model;
 
+import com.google.gson.JsonObject;
+import javax.json.JsonException;
+
 /**
  *
  * @author ADMIN
@@ -76,6 +79,14 @@ public class User {
         this.loginStatus = loginStatus;
     }
 
+    public User(int uid, String email, String password, String loginStatus, String role) {
+        this.uid = uid;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.loginStatus = loginStatus;
+    }
+
     public int getUid() {
         return uid;
     }
@@ -140,4 +151,15 @@ public class User {
         this.loginStatus = loginStatus;
     }
 
+    public JsonObject getJSONObject() {
+        JsonObject obj = new JsonObject();
+        try {
+            obj.addProperty("uid", uid);
+            obj.addProperty("email", email);
+            obj.addProperty("password", password);
+        } catch (JsonException e) {
+            System.out.println(e);
+        }
+        return obj;
+    }
 }

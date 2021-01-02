@@ -30,10 +30,18 @@ public class VerifyRequest {
         }
         return false;
     }
-    
+
     public static boolean verifyTopicManageRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String role = Authenticate.authenticate(request, response);
         if (role != null && Authorization.topicManageAuthor(response, role)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean verifyAdminManageRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String role = Authenticate.authenticate(request, response);
+        if (role != null && Authorization.adminManageAuthor(response, role)) {
             return true;
         }
         return false;

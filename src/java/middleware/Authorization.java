@@ -38,7 +38,7 @@ public class Authorization {
             return false;
         }
     }
-    
+
     public static boolean topicManageAuthor(HttpServletResponse response, String role) throws IOException {
         if ("TOPIC_MANAGE".equals(role)) {
             return true;
@@ -50,5 +50,17 @@ public class Authorization {
             return false;
         }
     }
-    
+
+    public static boolean adminManageAuthor(HttpServletResponse response, String role) throws IOException {
+        if ("ADMIN_MANAGE".equals(role)) {
+            return true;
+        } else {
+            String json = new Gson().toJson("Permission Error: you are not admin manager.");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            return false;
+        }
+    }
+
 }
