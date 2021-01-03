@@ -108,7 +108,8 @@ public class AccountServiceImplement implements AccountService {
 
             ResultSet rs = state.executeQuery();
             if (rs.next()) {
-                if (BCrypt.checkpw(password, rs.getString("password"))) {
+//                if (BCrypt.checkpw(password, rs.getString("password"))) {
+                if (rs.getString("password").equals(password)) {
                     if (rs.getString("status").equals("VERIFIED")) {
                         return new User(rs.getInt("uid"), email, rs.getString("role"), "login success");
                     } else if (rs.getString("status").equals("NOT_VERIFY")) {

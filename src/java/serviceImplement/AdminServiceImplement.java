@@ -24,8 +24,7 @@ import service.AdminService;
  *
  * @author Thao
  */
-public class AdminServiceImplement implements AdminService{
-    
+public class AdminServiceImplement implements AdminService {
 
     @Override
     public boolean checkExistedEmail(String email) {
@@ -33,6 +32,7 @@ public class AdminServiceImplement implements AdminService{
                 PreparedStatement state1 = connection.prepareStatement("select * from user where email = ?");) {
 
             state1.setString(1, email);
+            System.out.println(email);
 
             ResultSet rs = state1.executeQuery();
             if (rs.next()) {
@@ -144,7 +144,7 @@ public class AdminServiceImplement implements AdminService{
             state.setString(1, "VERIFIED");
             state.setString(2, email);
             state.executeUpdate();
-            
+
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -154,7 +154,8 @@ public class AdminServiceImplement implements AdminService{
 
     @Override
     public boolean deleteAdmin(int id) {
-        try ( Connection connection = JDBCConnection.getConnection();  PreparedStatement state = connection.prepareStatement("delete from user where uid=?;");) {
+        System.out.println("admin dao impl");
+        try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("delete from user where uid=?;");) {
             state.setInt(1, id);
             int check = state.executeUpdate();
             if (check == 1) {
@@ -173,10 +174,10 @@ public class AdminServiceImplement implements AdminService{
 
     @Override
     public List<User> getAllUserAdmin() {
-        List < User > users = new ArrayList < > ();
+        List< User> users = new ArrayList<>();
 
         try (Connection connection = JDBCConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'USER_MANAGE' ?");) {
+                PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'USER_MANAGE'");) {
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -186,8 +187,8 @@ public class AdminServiceImplement implements AdminService{
                 String password = rs.getString("password");
                 users.add(new User(id, email, password, "VERIFIED", "USER_MANAGE"));
             }
-        } catch (SQLException e) 
-        {}
+        } catch (SQLException e) {
+        }
         return users;
     }
 
@@ -195,7 +196,7 @@ public class AdminServiceImplement implements AdminService{
     public User getSelectedAdmin(int id) {
         User user = null;
         try (Connection connection = JDBCConnection.getConnection();
-            PreparedStatement state = connection.prepareStatement("select * from user where uid=?");) {
+                PreparedStatement state = connection.prepareStatement("select * from user where uid=?");) {
             state.setInt(1, id);
 
             ResultSet rs = state.executeQuery();
@@ -204,17 +205,17 @@ public class AdminServiceImplement implements AdminService{
                 String role = rs.getString("role");
                 user = new User(id, role);
             }
-        } catch (SQLException e) 
-        {}
+        } catch (SQLException e) {
+        }
         return user;
     }
-    
+
     @Override
     public List<User> getAllTopicAdmin() {
-        List < User > users = new ArrayList < > ();
+        List< User> users = new ArrayList<>();
 
         try (Connection connection = JDBCConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'TOPIC_MANAGE' ?");) {
+                PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'TOPIC_MANAGE'");) {
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -224,9 +225,9 @@ public class AdminServiceImplement implements AdminService{
                 String password = rs.getString("password");
                 users.add(new User(id, email, password, "VERIFIED", "TOPIC_MANAGE"));
             }
-        } catch (SQLException e) 
-        {}
+        } catch (SQLException e) {
+        }
         return users;
     }
-    
+
 }
