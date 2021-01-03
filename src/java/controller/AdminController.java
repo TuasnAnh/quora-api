@@ -47,13 +47,7 @@ public class AdminController {
                 System.out.println("new admin: " + userId);
                 if (userId != -1) {
                     status.put("status", "success");
-                    status.put("roll", adminService.getUserRoll(email));
-
-                    // store email in http session
-                    HttpSession session = request.getSession();
-                    session.setAttribute("email", email);
-                    // set session expire in 30 days
-                    session.setMaxInactiveInterval(30 * 24 * 60 * 60);
+                    status.put("role", adminService.getUserRoll(email));
 
                     new Thread(() -> {
                         try {
@@ -92,13 +86,7 @@ public class AdminController {
                 System.out.println("new admin: " + userId);
                 if (userId != -1) {
                     status.put("status", "success");
-                    status.put("roll", adminService.getUserRoll(email));
-
-                    // store email in http session
-                    HttpSession session = request.getSession();
-                    session.setAttribute("email", email);
-                    // set session expire in 30 days
-                    session.setMaxInactiveInterval(30 * 24 * 60 * 60);
+                    status.put("role", adminService.getUserRoll(email));
 
                     new Thread(() -> {
                         try {
@@ -112,7 +100,6 @@ public class AdminController {
                     }).start();
                 }
             }
-
             String json = new Gson().toJson(status);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -122,18 +109,11 @@ public class AdminController {
 
     public static void deleteAdmin(HttpServletRequest request, HttpServletResponse response, JsonObject data) throws IOException, MessagingException {
         if (VerifyRequest.verifyAdminManageRequest(request, response)) {
-            String email = data.get("email").getAsString();
             int id = data.get("uid").getAsInt();
             Map<String, String> status = new LinkedHashMap<>();
-
-            // check if existed email
-            boolean isExisted = adminService.checkExistedEmail(email);
-            if (isExisted) {
-                boolean userId = adminService.deleteAdmin(id);
-                System.out.println("Delete admin: " + userId);
-                if (userId != false) {
-                    status.put("status", "success");
-                }
+            boolean userId = adminService.deleteAdmin(id);
+            if (userId) {
+                status.put("status", "success");
             } else {
                 status.put("status", "Delete failed.");
             }

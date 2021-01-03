@@ -60,8 +60,8 @@ public class EmailUtils {
         properties.put("mail.smtp.auth", "true");
         //        props.put("mail.smtp.starttls.required", "true");
 
-        String email = "dtuasnanh118@gmail.com";
-        String password = "ainsoft99";
+        String email = "modernquora1001@gmail.com";
+        String password = "Quora1001";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -74,9 +74,7 @@ public class EmailUtils {
         message.setFrom(new InternetAddress(email));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
         message.setSubject("QUORA: VERIFY EMAIL");
-        message.setSubject("Email:" + recipient);
-        message.setSubject("Password:" + pass);
-        message.setText("Verification link: \n" + verifyUrl);
+        message.setText("Email:" + recipient + "\n" + "Password:" + pass + "\n" +"Verification link: \n" + verifyUrl);
 
         Transport.send(message);
         System.out.println("Email Sended");

@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Topic;
 import model.User;
 import service.AdminService;
 //import org.apache.commons.lang3.RandomStringUtils;
@@ -24,7 +25,8 @@ import service.AdminService;
  *
  * @author Thao
  */
-public class AdminServiceImplement implements AdminService {
+public class AdminServiceImplement implements AdminService{
+    
 
     @Override
     public boolean checkExistedEmail(String email) {
@@ -32,7 +34,6 @@ public class AdminServiceImplement implements AdminService {
                 PreparedStatement state1 = connection.prepareStatement("select * from user where email = ?");) {
 
             state1.setString(1, email);
-            System.out.println(email);
 
             ResultSet rs = state1.executeQuery();
             if (rs.next()) {
@@ -50,7 +51,7 @@ public class AdminServiceImplement implements AdminService {
     @Override
     public int newUserAdmin(String firstName, String lastName, String email, String password) {
         try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement state1 = connection.prepareStatement("insert into user (email, password, first_name, last_name, roll, register_date) values (?, ?, ?, ?, ?, ?);");
+                PreparedStatement state1 = connection.prepareStatement("insert into user (email, password, first_name, last_name, role, register_date) values (?, ?, ?, ?, ?, ?);");
                 PreparedStatement state2 = connection.prepareStatement("SELECT LAST_INSERT_ID();");) {
 
             Date date = new java.util.Date();
@@ -87,7 +88,7 @@ public class AdminServiceImplement implements AdminService {
     @Override
     public int newTopicAdmin(String firstName, String lastName, String email, String password) {
         try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement state1 = connection.prepareStatement("insert into user (email, password, first_name, last_name, roll, register_date) values (?, ?, ?, ?, ?, ?);");
+                PreparedStatement state1 = connection.prepareStatement("insert into user (email, password, first_name, last_name, role, register_date) values (?, ?, ?, ?, ?, ?);");
                 PreparedStatement state2 = connection.prepareStatement("SELECT LAST_INSERT_ID();");) {
 
             Date date = new java.util.Date();
@@ -97,7 +98,7 @@ public class AdminServiceImplement implements AdminService {
             state1.setString(2, password);
             state1.setString(3, "TopicAdmin");
             state1.setString(4, "TopicAdmin");
-            state1.setString(5, "TOPIC_MANAGE");
+            state1.setString(5, "TOPIC_MANAGE");//viet vao db?
             state1.setTimestamp(6, timestamp);
 
             int check = state1.executeUpdate();
@@ -123,13 +124,13 @@ public class AdminServiceImplement implements AdminService {
 
     @Override
     public String getUserRoll(String email) {
-        try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("select roll from user where email = ?");) {
+        try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("select role from user where email = ?");) {
             state.setString(1, email);
 
             ResultSet rs = state.executeQuery();
 
             if (rs.next()) {
-                return rs.getString("roll");
+                return rs.getString("role");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -144,7 +145,7 @@ public class AdminServiceImplement implements AdminService {
             state.setString(1, "VERIFIED");
             state.setString(2, email);
             state.executeUpdate();
-
+            
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -154,8 +155,7 @@ public class AdminServiceImplement implements AdminService {
 
     @Override
     public boolean deleteAdmin(int id) {
-        System.out.println("admin dao impl");
-        try (Connection connection = JDBCConnection.getConnection(); PreparedStatement state = connection.prepareStatement("delete from user where uid=?;");) {
+        try ( Connection connection = JDBCConnection.getConnection();  PreparedStatement state = connection.prepareStatement("delete from user where uid=?;");) {
             state.setInt(1, id);
             int check = state.executeUpdate();
             if (check == 1) {
@@ -174,10 +174,10 @@ public class AdminServiceImplement implements AdminService {
 
     @Override
     public List<User> getAllUserAdmin() {
-        List< User> users = new ArrayList<>();
+        List < User > users = new ArrayList < > ();
 
         try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'USER_MANAGE'");) {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'USER_MANAGE' ");) {
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -187,8 +187,8 @@ public class AdminServiceImplement implements AdminService {
                 String password = rs.getString("password");
                 users.add(new User(id, email, password, "VERIFIED", "USER_MANAGE"));
             }
-        } catch (SQLException e) {
-        }
+        } catch (SQLException e) 
+        {}
         return users;
     }
 
@@ -196,7 +196,7 @@ public class AdminServiceImplement implements AdminService {
     public User getSelectedAdmin(int id) {
         User user = null;
         try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement state = connection.prepareStatement("select * from user where uid=?");) {
+            PreparedStatement state = connection.prepareStatement("select * from user where uid=?");) {
             state.setInt(1, id);
 
             ResultSet rs = state.executeQuery();
@@ -205,17 +205,17 @@ public class AdminServiceImplement implements AdminService {
                 String role = rs.getString("role");
                 user = new User(id, role);
             }
-        } catch (SQLException e) {
-        }
+        } catch (SQLException e) 
+        {}
         return user;
     }
-
+    
     @Override
     public List<User> getAllTopicAdmin() {
-        List< User> users = new ArrayList<>();
+        List < User > users = new ArrayList < > ();
 
         try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'TOPIC_MANAGE'");) {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from user where role = 'TOPIC_MANAGE' ");) {
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -225,9 +225,9 @@ public class AdminServiceImplement implements AdminService {
                 String password = rs.getString("password");
                 users.add(new User(id, email, password, "VERIFIED", "TOPIC_MANAGE"));
             }
-        } catch (SQLException e) {
-        }
+        } catch (SQLException e) 
+        {}
         return users;
     }
-
+    
 }
