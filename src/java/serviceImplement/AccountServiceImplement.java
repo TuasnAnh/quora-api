@@ -108,8 +108,8 @@ public class AccountServiceImplement implements AccountService {
 
             ResultSet rs = state.executeQuery();
             if (rs.next()) {
-//                if (BCrypt.checkpw(password, rs.getString("password"))) {
-                if (rs.getString("password").equals(password)) {
+                if (BCrypt.checkpw(password, rs.getString("password"))) {
+//                if (rs.getString("password").equals(password)) {
                     if (rs.getString("status").equals("VERIFIED")) {
                         return new User(rs.getInt("uid"), email, rs.getString("role"), "login success");
                     } else if (rs.getString("status").equals("NOT_VERIFY")) {
@@ -183,6 +183,11 @@ public class AccountServiceImplement implements AccountService {
     public boolean deleteUser(int uid) {
         try (Connection connection = JDBCConnection.getConnection();
                 PreparedStatement state1 = connection.prepareStatement("delete from user where uid = ?");) {
+            // update all topic user followed
+            PreparedStatement state2 = connection.prepareStatement("update topic set follower = follower - 1 where tid = (select tid from user_topic where uid = ?)");
+            state2.setInt(1, uid);
+            state2.executeUpdate();
+            
             state1.setInt(1, uid);
             state1.executeUpdate();
             return true;
@@ -195,7 +200,8 @@ public class AccountServiceImplement implements AccountService {
     @Override
     public User getUser(int uid) {
         try (Connection connection = JDBCConnection.getConnection();
-                PreparedStatement state1 = connection.prepareStatement("select first_name, last_name, description, credential, school, degreetype, graduation_year, location, url, register_date from user where role = \"USER\"");) {
+                PreparedStatement state1 = connection.prepareStatement("select first_name, last_name, description, credential, school, degreetype, graduation_year, location, url, register_date from user where uid = ?");) {
+            state1.setInt(1, uid);
             ResultSet rs = state1.executeQuery();
             if (rs.next()) {
                 return new User(uid, rs.getString("first_name"), rs.getString("last_name"), rs.getString("description"), rs.getString("credential"), rs.getString("school"), rs.getString("degreetype"), rs.getString("graduation_year"), rs.getString("location"), rs.getString("url"), rs.getString("register_date"));
@@ -246,9 +252,9 @@ public class AccountServiceImplement implements AccountService {
             ResultSet rs = state1.executeQuery();
             if (rs.next()) {
                 String email = rs.getString("email");
-//                String hash = BCrypt.hashpw(newPass, BCrypt.gensalt(10));
+                String hash = BCrypt.hashpw(newPass, BCrypt.gensalt(10));
                 PreparedStatement state2 = connection.prepareStatement("update user set password = ? where email = ?");
-                state2.setString(1, newPass);
+                state2.setString(1, hash);
                 state2.setString(2, email);
                 state2.executeUpdate();
 

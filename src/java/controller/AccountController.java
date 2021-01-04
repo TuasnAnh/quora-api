@@ -160,6 +160,7 @@ public class AccountController {
     public static void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (VerifyRequest.verifyUserManageRequest(request, response)) {
             int uid = Integer.parseInt(request.getParameter("uid"));
+            System.out.println(uid);
             User user = accountService.getUser(uid);
             String json = new Gson().toJson(user);
             System.out.println(json);

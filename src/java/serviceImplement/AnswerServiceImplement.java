@@ -26,18 +26,18 @@ public class AnswerServiceImplement implements AnswerService {
     public boolean deleteAnswer(int aid) {
         try (Connection connection = JDBCConnection.getConnection()) {
             PreparedStatement state1 = connection.prepareStatement("select uid from answer where aid = ?");
-            // delete bookmark
-            PreparedStatement state4 = connection.prepareStatement("delete from bookmark where aid = ?");
-            state4.setInt(1, aid);
-            state4.executeUpdate();
-            // delete user_answer
-            PreparedStatement state5 = connection.prepareStatement("delete from user_answer where aid = ?");
-            state5.setInt(1, aid);
-            state5.executeUpdate();
-            // delete notification
-            PreparedStatement state6 = connection.prepareStatement("delete from notification where aid = ?");
-            state6.setInt(1, aid);
-            state6.executeUpdate();
+//            // delete bookmark
+//            PreparedStatement state4 = connection.prepareStatement("delete from bookmark where aid = ?");
+//            state4.setInt(1, aid);
+//            state4.executeUpdate();
+//            // delete user_answer
+//            PreparedStatement state5 = connection.prepareStatement("delete from user_answer where aid = ?");
+//            state5.setInt(1, aid);
+//            state5.executeUpdate();
+//            // delete notification
+//            PreparedStatement state6 = connection.prepareStatement("delete from notification where aid = ?");
+//            state6.setInt(1, aid);
+//            state6.executeUpdate();
             // update number answer in question
             PreparedStatement state8 = connection.prepareStatement("select qid from answer where aid = ?");
             state8.setInt(1, aid);
@@ -47,8 +47,8 @@ public class AnswerServiceImplement implements AnswerService {
             PreparedStatement state7 = connection.prepareStatement("update question set totalanswer = totalanswer - 1 where qid = ?");
             state7.setInt(1, rs2.getInt("qid"));
             state7.executeUpdate();
-            // delete report
-            rpService.deleteReport(aid);
+//            // delete report
+//            rpService.deleteReport(aid);
 
             state1.setInt(1, aid);
             ResultSet rs = state1.executeQuery();
