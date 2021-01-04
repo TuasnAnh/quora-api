@@ -25,7 +25,7 @@ public class AnswerController {
     public static void deleteAnswer(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int aid = Integer.parseInt(request.getParameter("aid"));
         answerService.deleteAnswer(aid);
-        response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/report.jsp");
+        response.sendRedirect("http://localhost:38940/quora-admin-client/admin/user-manage/report.jsp");
     }
 
     public static void getAnswer(HttpServletRequest request, HttpServletResponse response) throws IOException {

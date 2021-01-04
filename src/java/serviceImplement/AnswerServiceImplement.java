@@ -20,10 +20,27 @@ import service.ReportService;
  */
 public class AnswerServiceImplement implements AnswerService {
 
+    ReportService rpService = new ReportServiceImplement();
+
     @Override
     public boolean deleteAnswer(int aid) {
         try (Connection connection = JDBCConnection.getConnection()) {
             PreparedStatement state1 = connection.prepareStatement("select uid from answer where aid = ?");
+            // delete bookmark
+            PreparedStatement state4 = connection.prepareStatement("delete from bookmark where aid = ?");
+            state4.setInt(1, aid);
+            state4.executeUpdate();
+            // delete user_answer
+            PreparedStatement state5 = connection.prepareStatement("delete from user_answer where aid = ?");
+            state5.setInt(1, aid);
+            state5.executeUpdate();
+            // delete notification
+            PreparedStatement state6 = connection.prepareStatement("delete from notification where aid = ?");
+            state6.setInt(1, aid);
+            state6.executeUpdate();
+            // delete report
+            rpService.deleteReport(aid);
+
             state1.setInt(1, aid);
             ResultSet rs = state1.executeQuery();
             rs.next();
@@ -36,8 +53,6 @@ public class AnswerServiceImplement implements AnswerService {
             state3.setString(2, "ANNOUNCEMENT");
             state3.setString(3, "Your answer has been deleted");
             state3.executeUpdate();
-            ReportService reportService = new ReportServiceImplement();
-            reportService.deleteReport(aid);
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();

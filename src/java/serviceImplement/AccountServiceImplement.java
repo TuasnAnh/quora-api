@@ -246,9 +246,9 @@ public class AccountServiceImplement implements AccountService {
             ResultSet rs = state1.executeQuery();
             if (rs.next()) {
                 String email = rs.getString("email");
-                String hash = BCrypt.hashpw(newPass, BCrypt.gensalt(10));
+//                String hash = BCrypt.hashpw(newPass, BCrypt.gensalt(10));
                 PreparedStatement state2 = connection.prepareStatement("update user set password = ? where email = ?");
-                state2.setString(1, hash);
+                state2.setString(1, newPass);
                 state2.setString(2, email);
                 state2.executeUpdate();
 

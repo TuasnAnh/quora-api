@@ -18,12 +18,12 @@ public class JDBCConnection {
 
     static String host = "localhost";
     static int port = 3306;
-    static String databaseName = "quoraapp";
+    static String databaseName = "quora-app";
 
     public static Connection getConnection() {
         final String url = "jdbc:mysql://" + host + ":" + port + "/" + databaseName +"?useSSL = false";
         final String user = "root";
-        final String password = "dungtrana2";
+        final String password = "ainsoft99";
 
         try {
             Class.forName("com.mysql.jdbc.Driver"); 

@@ -38,7 +38,7 @@ public class ReportController {
         if (VerifyRequest.verifyUserManageRequest(request, response)) {
             int aid = Integer.parseInt(request.getParameter("aid"));
             reportService.deleteReport(aid);
-            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/report.jsp");
+            response.sendRedirect("http://localhost:38940/quora-admin-client/admin/user-manage/report.jsp");
         }
     }
 }

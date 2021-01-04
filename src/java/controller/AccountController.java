@@ -145,7 +145,7 @@ public class AccountController {
         if (VerifyRequest.verifyUserManageRequest(request, response)) {
             int uid = Integer.parseInt(request.getParameter("uid"));
             accountService.banUser(uid);
-            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user.jsp");
+            response.sendRedirect("http://localhost:38940/quora-admin-client/admin/user-manage/user.jsp");
         }
     }
 
@@ -153,7 +153,7 @@ public class AccountController {
         if (VerifyRequest.verifyUserManageRequest(request, response)) {
             int uid = Integer.parseInt(request.getParameter("uid"));
             accountService.deleteUser(uid);
-            response.sendRedirect("http://localhost:8080/quora-admin-client/admin/user-manage/user.jsp");
+            response.sendRedirect("http://localhost:38940/quora-admin-client/admin/user-manage/user.jsp");
         }
     }
 
