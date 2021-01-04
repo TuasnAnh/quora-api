@@ -38,6 +38,15 @@ public class AnswerServiceImplement implements AnswerService {
             PreparedStatement state6 = connection.prepareStatement("delete from notification where aid = ?");
             state6.setInt(1, aid);
             state6.executeUpdate();
+            // update number answer in question
+            PreparedStatement state8 = connection.prepareStatement("select qid from answer where aid = ?");
+            state8.setInt(1, aid);
+            ResultSet rs2 = state8.executeQuery();
+            rs2.next();
+            
+            PreparedStatement state7 = connection.prepareStatement("update question set totalanswer = totalanswer - 1 where qid = ?");
+            state7.setInt(1, rs2.getInt("qid"));
+            state7.executeUpdate();
             // delete report
             rpService.deleteReport(aid);
 
